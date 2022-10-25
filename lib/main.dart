@@ -46,6 +46,9 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+
+  final List<String> tabTitles = const ['Women', 'Men', 'Kids'];
+
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
@@ -54,19 +57,9 @@ class _MyHomePageState extends State<MyHomePage> {
       child: Scaffold(
         appBar: AppBar(
           title: Text(widget.title),
-          bottom: const TabBar(
+          bottom: TabBar(
             indicatorColor: Colors.black,
-            tabs: <Widget>[
-              Tab(
-                text: 'WOMEN'
-              ),
-              Tab(
-                text: 'MEN'
-              ),
-              Tab(
-                text: 'KIDS'
-              ),
-            ],
+            tabs: tabTitles.map<Tab>((title) => Tab(text: title.toUpperCase())).toList(),
           ),
         ),
         body: const TabBarView(
