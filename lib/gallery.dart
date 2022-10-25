@@ -11,8 +11,21 @@ class GalleryWidget extends StatefulWidget {
 class _GalleryWidgetState extends State<GalleryWidget> {
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: Text('For ${widget.category} only')
+    return Container(
+      child: Column(
+        children: [
+          TextField(
+            cursorColor: Colors.black,
+            decoration: InputDecoration(
+              border: const OutlineInputBorder(),
+              labelText: "Search for ${widget.category}",
+              focusedBorder: const OutlineInputBorder(
+                borderSide: BorderSide(color: Colors.black, width: 0.0),
+              ),
+            )
+          )
+        ]
+      )
     );
   }
 }
