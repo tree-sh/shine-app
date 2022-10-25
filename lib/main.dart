@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import './gallery.dart';
 
 void main() {
   runApp(const MyApp());
@@ -62,18 +63,8 @@ class _MyHomePageState extends State<MyHomePage> {
             tabs: tabTitles.map<Tab>((title) => Tab(text: title.toUpperCase())).toList(),
           ),
         ),
-        body: const TabBarView(
-          children: <Widget>[
-            Center(
-              child: Text("For Women"),
-            ),
-            Center(
-              child: Text("For Men"),
-            ),
-            Center(
-              child: Text("For Kids"),
-            ),
-          ],
+        body: TabBarView(
+          children: tabTitles.map<GalleryWidget>((title) => GalleryWidget(category: title)).toList(),
         ),
       ),
     );
