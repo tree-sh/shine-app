@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:shine_app/enums/categories.dart';
 import './gallery.dart';
 
 void main() {
@@ -48,7 +49,11 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
 
-  final List<String> tabTitles = const ['Women', 'Men', 'Kids'];
+  final List<Map<String, Categories>> tabTitles = const [
+    { 'Women': Categories.women }, 
+    { 'Men': Categories.men },
+    { 'Kids': Categories.kids }
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -60,11 +65,11 @@ class _MyHomePageState extends State<MyHomePage> {
           title: Text(widget.title),
           bottom: TabBar(
             indicatorColor: Colors.black,
-            tabs: tabTitles.map<Tab>((title) => Tab(text: title.toUpperCase())).toList(),
+            tabs: tabTitles.map<Tab>((title) => Tab(text: title.keys.first.toUpperCase())).toList(),
           ),
         ),
         body: TabBarView(
-          children: tabTitles.map<GalleryWidget>((title) => GalleryWidget(category: title)).toList(),
+          children: tabTitles.map<GalleryWidget>((title) => GalleryWidget(category: title.values.first)).toList(),
         ),
       ),
     );
