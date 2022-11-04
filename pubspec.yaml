@@ -68,6 +68,16 @@ flutter:
     - images/tshirt.jpeg
     - images/long_sleeve.webp
     - images/crew_neck.webp
+    - images/tank_top.jpg
+    - images/black_leggings.jpeg
+    - images/olive_crop_top.jpeg
+    - images/womens_jeans.webp
+    - images/mens_collared_shirt.jpeg
+    - images/mens_long_sleeve.webp
+    - images/mens_long_sleeve.webp
+    - images/men_khaki_pants.jpeg
+    - images/kids_graphic_tees1.jpeg
+    - images/kids_graphic_tees2.jpeg
     - .env
 
   # An image asset can refer to one or more resolution-specific "variants", see
