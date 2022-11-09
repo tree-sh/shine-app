@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:shine_app/product_display.dart';
 import './gallery.dart';
 
 Future<void> main() async{
@@ -34,7 +35,10 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: white
       ),
-      home: const MyHomePage(title: 'SHINE'),
+      routes: {
+        '/': ((context) =>  MyHomePage(title: 'SHINE')),
+        '/product': ((context) => ProductDisplay())
+      }
     );
   }
 }

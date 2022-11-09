@@ -17,10 +17,12 @@ class GalleryWidget extends StatefulWidget {
 class _GalleryWidgetState extends State<GalleryWidget> {
 
   double _width = -1;
+  late BuildContext _context;
 
   @override
   Widget build(BuildContext context) {
     _width = MediaQuery.of(context).size.width;
+    _context = context;
     final products = getProducts();
     return Container(
       child: SingleChildScrollView(
@@ -60,31 +62,36 @@ class _GalleryWidgetState extends State<GalleryWidget> {
   }
 
   Widget productsBuilder(product) {
-    return Container(
-        width: _width * 0.5,
-        child: Card(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                Image.asset(product.image),
-                      Container(
-                        width: _width * 0.4,
-                        child: Text(
-                          product.name,
-                          softWrap: true,
+    return GestureDetector(
+      onTap: () {
+        Navigator.pushNamed(_context, '/product');
+      },
+      child: Container(
+          width: _width * 0.5,
+          child: Card(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  Image.asset(product.image),
+                        Container(
+                          width: _width * 0.4,
+                          child: Text(
+                            product.name,
+                            softWrap: true,
+                          )
+                        ),
+                        Container(
+                          width: _width * 0.4,
+                          child: Text(
+                            "₱${product.price.toStringAsFixed(2)}",
+                            style: TextStyle(fontSize: 21, color: Colors.orange, fontWeight: FontWeight.w600),
+                          )
                         )
-                      ),
-                      Container(
-                        width: _width * 0.4,
-                        child: Text(
-                          "P${product.price.toStringAsFixed(2)}",
-                          style: TextStyle(fontSize: 21, color: Colors.orange, fontWeight: FontWeight.w600),
-                        )
-                      )
-                    ],
+                      ],
+                    )
                   )
-                )
-      );
+        ),
+    );
   }
 
   Future<List<Product>> getProducts() async {
