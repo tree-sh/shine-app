@@ -78,7 +78,7 @@ class _GalleryWidgetState extends State<GalleryWidget> {
                         width: _width * 0.4,
                         child: Text(
                           "P${product.price.toStringAsFixed(2)}",
-                          style: TextStyle(fontSize: 21)
+                          style: TextStyle(fontSize: 21, color: Colors.orange, fontWeight: FontWeight.w600),
                         )
                       )
                     ],
