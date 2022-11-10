@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:shine_app/screens/bag/shopping_bag.dart';
 import 'package:shine_app/screens/product_display/product_display.dart';
-import './gallery.dart';
+import 'package:shine_app/screens/wishlist/wishlist.dart';
+import 'screens/gallery/gallery.dart';
 import 'models/product.dart';
 
 Future<void> main() async{
@@ -44,6 +46,10 @@ class MyApp extends StatelessWidget {
             return MaterialPageRoute(builder: (context) => ProductDisplay(arguments));
           }
           break;
+        case '/shopping-bag':
+          return MaterialPageRoute(builder: (context) => ShoppingBag());
+        case '/wishlist':
+          return MaterialPageRoute(builder: (context) => Wishlist());
         default:
           return MaterialPageRoute(builder: (context) => MyHomePage(title: "SHINE"));
       }
@@ -77,12 +83,22 @@ class _MyHomePageState extends State<MyHomePage> {
       child: Scaffold(
         appBar: AppBar(
           title: Text(widget.title, style: TextStyle(fontSize: 28)),
-          leading: const Icon(Icons.favorite_outline, size: 32),
+          leading: GestureDetector(
+            onTap: (){
+              Navigator.pushNamed(context, '/wishlist');
+            },
+            child: const Icon(Icons.favorite_outline, size: 32)
+          ),
           titleSpacing: 0,
-          actions: const [
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 10.0),
-              child: Icon(Icons.shopping_bag_outlined, size: 32),
+          actions: [
+            GestureDetector(
+              onTap: (){
+                Navigator.pushNamed(context, '/shopping-bag');
+              },
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                child: Icon(Icons.shopping_bag_outlined, size: 32),
+              ),
             ),
           ],
           bottom: TabBar(
