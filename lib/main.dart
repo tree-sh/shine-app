@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:shine_app/product_display.dart';
 import './gallery.dart';
+import 'models/product.dart';
 
 Future<void> main() async{
   await dotenv.load();
@@ -35,10 +36,21 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: white
       ),
-      routes: {
-        '/': ((context) =>  MyHomePage(title: 'SHINE')),
-        '/product': ((context) => ProductDisplay())
+      onGenerateRoute: (settings) {
+      final arguments = settings.arguments;
+      switch (settings.name) {
+        case '/product':
+          if (arguments is Product) {
+            // the details page for one specific user
+            return MaterialPageRoute(builder: (context) => ProductDisplay(arguments));
+          }
+          else {
+            break;
+          }
+        default:
+          return MaterialPageRoute(builder: (context) => MyHomePage(title: "SHEIN"));
       }
+    },
     );
   }
 }

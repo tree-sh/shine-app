@@ -64,7 +64,7 @@ class _GalleryWidgetState extends State<GalleryWidget> {
   Widget productsBuilder(product) {
     return GestureDetector(
       onTap: () {
-        Navigator.pushNamed(_context, '/product');
+        Navigator.pushNamed(_context, '/product', arguments: product);
       },
       child: Container(
           width: _width * 0.5,

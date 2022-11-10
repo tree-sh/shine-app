@@ -1,9 +1,11 @@
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
+
 import 'package:flutter/material.dart';
 
+import 'models/product.dart';
+
 class ProductDisplay extends StatefulWidget {
-  const ProductDisplay({super.key});
+  final Product product;
+  const ProductDisplay(this.product);
 
   @override
   State<ProductDisplay> createState() => _ProductDisplayState();
@@ -31,7 +33,7 @@ class _ProductDisplayState extends State<ProductDisplay> {
               fit: StackFit.loose,
               children: [
                 Image.asset(
-                  'images/dress.jpg', 
+                  widget.product.image, 
                   height: _height * 0.75,
                   fit: BoxFit.fill
                 ),
@@ -64,7 +66,7 @@ class _ProductDisplayState extends State<ProductDisplay> {
                                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                   children: [
                                     Text(
-                                      "Blue Polkadot Dress",
+                                      widget.product.name,
                                       style: TextStyle(fontSize: 21, fontWeight: FontWeight.w600),
                                     ),
                                     Row(children: [
@@ -89,7 +91,7 @@ class _ProductDisplayState extends State<ProductDisplay> {
                               Container(
                                 width: _width,
                                 child: Text(
-                                  "₱299.99",
+                                  "₱${widget.product.price}",
                                   style: TextStyle(fontSize: 21, color: Colors.orange, fontWeight: FontWeight.w600),
                                 ),
                               ),
