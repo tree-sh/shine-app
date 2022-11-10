@@ -54,19 +54,19 @@ class _ProductDescriptionState extends State<ProductDescription> {
                             style: TextStyle(fontSize: 21, fontWeight: FontWeight.w600),
                           ),
                         ),
-                                    Row(children: [
-                                      GestureDetector(
-                                        onTap: (){
-                                          setState(() { isFavorite = !isFavorite; });
-                                        },
-                                        child: isFavorite ? Icon(Icons.favorite, size: 32, color: Colors.red) :  Icon(Icons.favorite_outline, size: 32)
-                                      ),
+                        Row(children: [
+                          GestureDetector(
+                            onTap: (){
+                              setState(() { isFavorite = !isFavorite; });
+                            },
+                            child: isFavorite ? Icon(Icons.favorite, size: 32, color: Colors.red) :  Icon(Icons.favorite_outline, size: 32)
+                          ),
                                       SizedBox(width: 10),
                                       GestureDetector(
                                         onTap: (){
                                           setState((){ isAddedToCart = !isAddedToCart; }); 
                                         },
-                                        child: isAddedToCart ? Icon(Icons.add_shopping_cart, size: 32, color: Colors.green) : Icon(Icons.add_shopping_cart, size: 32)
+                                        child: isAddedToCart ? Icon(Icons.shopping_bag, size: 32, color: Colors.green) : Icon(Icons.shopping_bag_outlined, size: 32)
                                       ),
                                     ],),
                                   ],

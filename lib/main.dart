@@ -45,7 +45,7 @@ class MyApp extends StatelessWidget {
           }
           break;
         default:
-          return MaterialPageRoute(builder: (context) => MyHomePage(title: "SHEIN"));
+          return MaterialPageRoute(builder: (context) => MyHomePage(title: "SHINE"));
       }
     },
     );
@@ -76,7 +76,15 @@ class _MyHomePageState extends State<MyHomePage> {
       length: 3,
       child: Scaffold(
         appBar: AppBar(
-          title: Text(widget.title),
+          title: Text(widget.title, style: TextStyle(fontSize: 28)),
+          leading: const Icon(Icons.favorite_outline, size: 32),
+          titleSpacing: 0,
+          actions: const [
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 10.0),
+              child: Icon(Icons.shopping_bag_outlined, size: 32),
+            ),
+          ],
           bottom: TabBar(
             indicatorColor: Colors.black,
             tabs: tabTitles.map<Tab>((title) => Tab(text: title.toUpperCase())).toList(),
