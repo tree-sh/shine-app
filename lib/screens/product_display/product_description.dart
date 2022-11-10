@@ -1,74 +1,59 @@
-
 import 'package:flutter/material.dart';
+import 'package:shine_app/models/product.dart';
 
-import 'models/product.dart';
-
-class ProductDisplay extends StatefulWidget {
+class ProductDescription extends StatefulWidget {
   final Product product;
-  const ProductDisplay(this.product);
+  const ProductDescription(this.product);
 
   @override
-  State<ProductDisplay> createState() => _ProductDisplayState();
+  State<ProductDescription> createState() => _ProductDescriptionState();
 }
 
-class _ProductDisplayState extends State<ProductDisplay> {
+class _ProductDescriptionState extends State<ProductDescription> {
 
-    bool isFavorite = false;
-    bool isAddedToCart = false;
+  bool isFavorite = false;
+  bool isAddedToCart = false;
 
   @override
   Widget build(BuildContext context) {
-    double _height = MediaQuery.of(context).size.height;
-    double _width = MediaQuery.of(context).size.width;
-
-    return Scaffold(
-      appBar: AppBar(
-        leading: GestureDetector(
-          onTap: () => Navigator.of(context).pop(),
-          child: Icon(Icons.arrow_back)
-          )
-      ),
-      body: Stack(
+    double height = MediaQuery.of(context).size.height;
+    double width = MediaQuery.of(context).size.width;
+    return SingleChildScrollView(
+      child: Column(
+          children: [
+            SizedBox(height: height * 0.45),
+            Container(
               alignment: Alignment.bottomCenter,
-              fit: StackFit.loose,
-              children: [
-                Image.asset(
-                  widget.product.image, 
-                  height: _height * 0.75,
-                  fit: BoxFit.fill
-                ),
-                SingleChildScrollView(
-                    child: Column(
+              margin: const EdgeInsets.symmetric(horizontal: 5, vertical: 10),
+              padding: const EdgeInsets.all(10),
+              decoration: BoxDecoration(
+                color: Colors.white,
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.grey.withOpacity(0.3),
+                    spreadRadius: 1,
+                    blurRadius: 2,
+                    offset: Offset(0, 3), // changes position of shadow
+                  ),
+                ],
+              ),
+              width: width * 0.95,
+               child: Column(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  Container(
+                    width: width,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        SizedBox(height: _height * 0.45),
                         Container(
-                          alignment: Alignment.bottomCenter,
-                          margin: EdgeInsets.symmetric(horizontal: 5, vertical: 10),
-                          padding: EdgeInsets.all(10),
-                          decoration: BoxDecoration(
-                            color: Colors.white,
-                            boxShadow: [
-                              BoxShadow(
-                                  color: Colors.grey.withOpacity(0.3),
-                                  spreadRadius: 1,
-                                  blurRadius: 2,
-                                  offset: Offset(0, 3), // changes position of shadow
-                                ),
-                              ],
+                          width: width * 0.65,
+                          child: Text(
+                            widget.product.name,
+                            softWrap: true,
+                            style: TextStyle(fontSize: 21, fontWeight: FontWeight.w600),
                           ),
-                          width: _width * 0.95,
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.end,
-                            children: [
-                              Container(
-                                width: _width,
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Text(
-                                      widget.product.name,
-                                      style: TextStyle(fontSize: 21, fontWeight: FontWeight.w600),
-                                    ),
+                        ),
                                     Row(children: [
                                       GestureDetector(
                                         onTap: (){
@@ -89,7 +74,7 @@ class _ProductDisplayState extends State<ProductDisplay> {
                               ),
                               SizedBox(height: 5, width: 10),
                               Container(
-                                width: _width,
+                                width: width,
                                 child: Text(
                                   "₱${widget.product.price}",
                                   style: TextStyle(fontSize: 21, color: Colors.orange, fontWeight: FontWeight.w600),
@@ -97,7 +82,7 @@ class _ProductDisplayState extends State<ProductDisplay> {
                               ),
                               SizedBox(height: 20, width: 10),
                               Container(
-                                width: _width,
+                                width: width,
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
@@ -129,10 +114,6 @@ class _ProductDisplayState extends State<ProductDisplay> {
                         )
                       ],
                     )
-                ),
-              ]
-            ),
-      //)
-    );
+                );
   }
 }
