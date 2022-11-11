@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:shine_app/models/product.dart';
+import 'package:shine_app/state/shopping_bag.dart';
+import 'package:provider/provider.dart';
 
 class ProductDescription extends StatefulWidget {
   final Product product;
@@ -18,6 +20,7 @@ class _ProductDescriptionState extends State<ProductDescription> {
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
+    var shoppingBagModel = Provider.of<ShoppingBagNotifier>(context);
     return SingleChildScrollView(
       child: Column(
           children: [
@@ -61,17 +64,27 @@ class _ProductDescriptionState extends State<ProductDescription> {
                             },
                             child: isFavorite ? Icon(Icons.favorite, size: 32, color: Colors.red) :  Icon(Icons.favorite_outline, size: 32)
                           ),
-                                      SizedBox(width: 10),
-                                      GestureDetector(
-                                        onTap: (){
-                                          setState((){ isAddedToCart = !isAddedToCart; }); 
-                                        },
-                                        child: isAddedToCart ? Icon(Icons.shopping_bag, size: 32, color: Colors.green) : Icon(Icons.shopping_bag_outlined, size: 32)
-                                      ),
-                                    ],),
-                                  ],
-                                )
-                              ),
+                          const SizedBox(width: 10),
+                          GestureDetector(
+                            onTap: (){
+                              if(!shoppingBagModel.cartContainsProduct(widget.product.id)) {
+                               shoppingBagModel.add(widget.product);
+                              } else {
+                                shoppingBagModel.remove(widget.product);
+                              }
+                            },
+                            child: Consumer<ShoppingBagNotifier>(
+                              builder: ((context, value, child) {
+                                if(value.products.map((item) => item.id).contains(widget.product.id)){
+                                  return const Icon(Icons.shopping_bag, size: 32, color: Colors.green);
+                                }
+                                return const Icon(Icons.shopping_bag_outlined, size: 32);
+                              })
+                            ))
+                        ])
+                      ],
+                    )
+                  ),
                               SizedBox(height: 5, width: 10),
                               Container(
                                 width: width,
@@ -114,6 +127,6 @@ class _ProductDescriptionState extends State<ProductDescription> {
                         )
                       ],
                     )
-                );
+    );
   }
 }

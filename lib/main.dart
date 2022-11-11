@@ -1,14 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:provider/provider.dart';
 import 'package:shine_app/screens/bag/shopping_bag.dart';
 import 'package:shine_app/screens/product_display/product_display.dart';
 import 'package:shine_app/screens/wishlist/wishlist.dart';
+import 'package:shine_app/state/shopping_bag.dart';
 import 'screens/gallery/gallery.dart';
 import 'models/product.dart';
 
 Future<void> main() async{
   await dotenv.load();
-  runApp(const MyApp());
+  runApp(
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (context) => ShoppingBagNotifier())
+      ],
+      child: const MyApp()
+    )
+  );
 }
 
 class MyApp extends StatelessWidget {
@@ -47,11 +56,11 @@ class MyApp extends StatelessWidget {
           }
           break;
         case '/shopping-bag':
-          return MaterialPageRoute(builder: (context) => ShoppingBag());
+          return MaterialPageRoute(builder: (context) => const ShoppingBag());
         case '/wishlist':
-          return MaterialPageRoute(builder: (context) => Wishlist());
+          return MaterialPageRoute(builder: (context) => const Wishlist());
         default:
-          return MaterialPageRoute(builder: (context) => MyHomePage(title: "SHINE"));
+          return MaterialPageRoute(builder: (context) => const MyHomePage(title: "SHINE"));
       }
     },
     );
@@ -82,7 +91,7 @@ class _MyHomePageState extends State<MyHomePage> {
       length: 3,
       child: Scaffold(
         appBar: AppBar(
-          title: Text(widget.title, style: TextStyle(fontSize: 28)),
+          title: Text(widget.title, style: const TextStyle(fontSize: 28)),
           leading: GestureDetector(
             onTap: (){
               Navigator.pushNamed(context, '/wishlist');
@@ -95,8 +104,8 @@ class _MyHomePageState extends State<MyHomePage> {
               onTap: (){
                 Navigator.pushNamed(context, '/shopping-bag');
               },
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 10.0),
+              child: const Padding(
+                padding: EdgeInsets.symmetric(horizontal: 10.0),
                 child: Icon(Icons.shopping_bag_outlined, size: 32),
               ),
             ),
