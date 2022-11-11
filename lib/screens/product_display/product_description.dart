@@ -54,15 +54,28 @@ class _ProductDescriptionState extends State<ProductDescription> {
                           child: Text(
                             widget.product.name,
                             softWrap: true,
-                            style: TextStyle(fontSize: 21, fontWeight: FontWeight.w600),
+                            style: const TextStyle(fontSize: 21, fontWeight: FontWeight.w600),
                           ),
                         ),
                         Row(children: [
                           GestureDetector(
                             onTap: (){
-                              setState(() { isFavorite = !isFavorite; });
+                              setState(() { 
+                                if(!shoppingBagModel.wishlistContainsProduct(widget.product.id)) {
+                                  shoppingBagModel.addToWishlist(widget.product);
+                                } else {
+                                  shoppingBagModel.removeFromWishlist(widget.product);
+                                }
+                              });
                             },
-                            child: isFavorite ? Icon(Icons.favorite, size: 32, color: Colors.red) :  Icon(Icons.favorite_outline, size: 32)
+                            child: Consumer<ShoppingBagNotifier>(
+                              builder: ((context, value, child) {
+                                if(shoppingBagModel.wishlistContainsProduct(widget.product.id)){
+                                  return const Icon(Icons.favorite, size: 32, color: Colors.red);
+                                }
+                                return const Icon(Icons.favorite_border_outlined, size: 32);
+                              })
+                            )
                           ),
                           const SizedBox(width: 10),
                           GestureDetector(
