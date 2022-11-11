@@ -45,7 +45,17 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
-        primarySwatch: white
+        primarySwatch: white,
+        //colorScheme: ColorScheme.fromSwatch(primarySwatch: white).copyWith(secondary: Colors.black),
+        buttonTheme: ButtonThemeData(
+          buttonColor: Colors.black,
+          textTheme: ButtonTextTheme.primary
+        ),
+        elevatedButtonTheme: ElevatedButtonThemeData(
+          style: ElevatedButton.styleFrom(
+            backgroundColor: Colors.black,
+            textStyle: TextStyle(color: Colors.white, fontSize: 18),
+        )),
       ),
       onGenerateRoute: (settings) {
       final arguments = settings.arguments;
