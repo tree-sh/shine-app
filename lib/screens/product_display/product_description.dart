@@ -63,8 +63,14 @@ class _ProductDescriptionState extends State<ProductDescription> {
                               setState(() { 
                                 if(!shoppingBagModel.wishlistContainsProduct(widget.product.id)) {
                                   shoppingBagModel.addToWishlist(widget.product);
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                    const SnackBar(content: Text("Added to Wishlist!", style: TextStyle(fontSize: 18)))
+                                  );
                                 } else {
                                   shoppingBagModel.removeFromWishlist(widget.product);
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                    const SnackBar(content: Text("Removed from Wishlist", style: TextStyle(fontSize: 18)))
+                                  );
                                 }
                               });
                             },
@@ -81,9 +87,15 @@ class _ProductDescriptionState extends State<ProductDescription> {
                           GestureDetector(
                             onTap: (){
                               if(!shoppingBagModel.cartContainsProduct(widget.product.id)) {
-                               shoppingBagModel.add(widget.product);
+                                shoppingBagModel.add(widget.product);
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                const SnackBar(content: Text("Added to Bag!", style: TextStyle(fontSize: 18)))
+                               );
                               } else {
                                 shoppingBagModel.remove(widget.product);
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                const SnackBar(content: Text("Removed from Bag", style: TextStyle(fontSize: 18)))
+                               );
                               }
                             },
                             child: Consumer<ShoppingBagNotifier>(
