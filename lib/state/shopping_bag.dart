@@ -40,7 +40,7 @@ class ShoppingBagNotifier extends ChangeNotifier {
     return _productsInWishlist.map((e) => e.id).contains(id);
   }
 
-  get products{
+  List<Product> get products{
     return _productsInBag;
   }
 
