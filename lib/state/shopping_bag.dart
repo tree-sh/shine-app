@@ -5,7 +5,7 @@ class ShoppingBagNotifier extends ChangeNotifier {
   final List<Product> _productsInBag = [];
   final List<Product> _productsInWishlist = [];
 
-  double get totalPrice => _productsInBag.map((product) => product.price).reduce((value, element) => element + value);
+  double get totalPrice => _productsInBag.map((product) => product.price * product.quantity).reduce((value, element) => element + value);
 
   void add(Product item) {
     _productsInBag.add(item);
@@ -38,6 +38,13 @@ class ShoppingBagNotifier extends ChangeNotifier {
 
   bool wishlistContainsProduct(String id) {
     return _productsInWishlist.map((e) => e.id).contains(id);
+  }
+
+  void replaceProduct(Product item){
+    int index = _productsInBag.indexWhere((element) => element.id == item.id);
+    _productsInBag.replaceRange(index, index + 1, [item]);
+    print(_productsInBag.map((e) => e.quantity));
+    notifyListeners();
   }
 
   List<Product> get products{

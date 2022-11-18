@@ -4,13 +4,15 @@ class Product {
   final double price;
   final String image;
   final String category;
+  int quantity;
   
   Product({
     required this.id,
     required this.name,
     required this.price,
     required this.image,
-    required this.category
+    required this.category,
+    this.quantity = 1
   });
 
   factory Product.fromJson(Map<String, dynamic> json) {
@@ -21,5 +23,9 @@ class Product {
       image: json['image'],
       category: json['category']
     );
+  }
+
+  set qty(int qty) {
+    this.quantity = qty;
   }
 }

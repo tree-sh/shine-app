@@ -172,28 +172,44 @@ class _ShoppingBagState extends State<ShoppingBag> {
                     borderRadius: BorderRadius.circular(18),
                     border: Border.all()
                   ),
-                  child: Row(
-                    children: [
-                      SizedBox(width: 8),
-                      GestureDetector(
-                        onTap: (){},
-                          child: Icon(Icons.add, size: 25)
+                  child: Consumer<ShoppingBagNotifier>(
+                    builder: ((context, value, child) {
+                      return Row(
+                      children: [
+                        SizedBox(width: 8),
+                        GestureDetector(
+                          onTap: (){
+                            product.qty = product.quantity + 1;
+                            value.replaceProduct(product);
+                          },
+                            child: Icon(Icons.add, size: 25)
+                          ),
+                        SizedBox(width: 15),
+                        Text("${product.quantity}", style: TextStyle(fontSize: 25)),
+                        SizedBox(width: 15),
+                        GestureDetector(
+                          onTap: (){
+                            if(product.quantity > 1)
+                            {
+                              product.qty = product.quantity - 1;
+                              value.replaceProduct(product);
+                            }
+                            else {
+                              value.remove(product);
+                            }
+                          },
+                          child: Icon(Icons.remove, size: 25)
                         ),
-                      SizedBox(width: 15),
-                      Text("9", style: TextStyle(fontSize: 25)),
-                      SizedBox(width: 15),
-                      GestureDetector(
-                        onTap: (){},
-                        child: Icon(Icons.remove, size: 25)
-                      ),
-                      SizedBox(width: 8)
-                    ],
+                        SizedBox(width: 8)
+                      ],
+                    );
+                    })
                   )
                 )
               ],
-                              ),
-                            )
-                          ],
+            ),
+          )
+        ],
                         )
                       );
     }).toList();
@@ -201,7 +217,7 @@ class _ShoppingBagState extends State<ShoppingBag> {
 
   void computePrice(){
     selectedPrice = shoppingBagSelected.length > 0 ? 
-      shoppingBagSelected.map((selected) => selected.price).reduce((value, element) => value + element)
+      shoppingBagSelected.map((selected) => selected.price * selected.quantity).reduce((value, element) => value + element)
       : 0;
   }
 }
