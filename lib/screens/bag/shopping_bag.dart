@@ -191,11 +191,13 @@ class _ShoppingBagState extends State<ShoppingBag> {
                           onTap: (){
                             if(product.quantity > 1)
                             {
+                              
                               product.qty = product.quantity - 1;
                               value.replaceProduct(product);
                             }
                             else {
-                              value.remove(product);
+                              _showMyDialog(context, value, product);
+                              
                             }
                           },
                           child: Icon(Icons.remove, size: 25)
@@ -210,10 +212,44 @@ class _ShoppingBagState extends State<ShoppingBag> {
             ),
           )
         ],
-                        )
-                      );
+      )
+    );
     }).toList();
   }
+
+  Future<void> _showMyDialog(BuildContext context, ShoppingBagNotifier model, Product product) async {
+  return showDialog<void>(
+    context: context,
+    barrierDismissible: false, // user must tap button!
+    builder: (BuildContext context) {
+      return AlertDialog(
+        title: const Text('Remove Item'),
+        content: SingleChildScrollView(
+          child: ListBody(
+            children: const <Widget>[
+              Text('Are you sure you want to remove this item from the list?'),
+            ],
+          ),
+        ),
+        actions: <Widget>[
+          TextButton(
+            child: const Text('Remove', style: TextStyle(color: Colors.red)),
+            onPressed: () {
+              model.remove(product);
+              Navigator.pop(context, true);
+            },
+          ),
+          TextButton(
+            child: const Text('Cancel', style: TextStyle(color: Colors.black)),
+            onPressed: () {
+              Navigator.pop(context, false);
+            },
+          ),
+        ],
+      );
+    },
+  );
+}
 
   void computePrice(){
     selectedPrice = shoppingBagSelected.length > 0 ? 
