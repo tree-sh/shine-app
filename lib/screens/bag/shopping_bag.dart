@@ -113,7 +113,10 @@ class _ShoppingBagState extends State<ShoppingBag> {
                             Container(
                               color: Colors.blue,
                               child: ElevatedButton(
-                                onPressed: (){},
+                                onPressed: (){
+                                  value.checkout(shoppingBagSelected);
+                                  selectedPrice = 0;
+                                },
                                 child: Text("CHECKOUT", style: TextStyle(color: Colors.white)),
                                 style: ElevatedButton.styleFrom(
                                   minimumSize: Size(_width * 0.45, _height * 0.05)
