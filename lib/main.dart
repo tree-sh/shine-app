@@ -110,14 +110,50 @@ class _MyHomePageState extends State<MyHomePage> {
           ),
           titleSpacing: 0,
           actions: [
-            GestureDetector(
-              onTap: (){
-                Navigator.pushNamed(context, '/shopping-bag');
-              },
-              child: const Padding(
-                padding: EdgeInsets.symmetric(horizontal: 10.0),
-                child: Icon(Icons.shopping_bag_outlined, size: 32),
-              ),
+            Stack(
+              children: [
+                GestureDetector(
+                  onTap: (){
+                    Navigator.pushNamed(context, '/shopping-bag');
+                  },
+                  child: const Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 10.0),
+                    child: Icon(Icons.shopping_bag_outlined, size: 32),
+                  ),
+                ),
+                Positioned(
+                  right: 6,
+                  child: Consumer<ShoppingBagNotifier>(
+                    builder:(context, value, child) {
+                      if(value.totalItemsInBag > 0)
+                      {
+                        return Container(
+                          padding: EdgeInsets.all(1),
+                          decoration: new BoxDecoration(
+                            color: Colors.red,
+                            borderRadius: BorderRadius.circular(6),
+                          ),
+                          constraints: BoxConstraints(
+                            minWidth: 18,
+                            minHeight: 18,
+                          ),
+                          child: new Text(
+                            value.totalItemsInBag.toString(),
+                            style: new TextStyle(
+                              color: Colors.white,
+                              fontSize: 14,
+                              fontWeight: FontWeight.bold
+                            ),
+                            textAlign: TextAlign.center,
+                          ),
+                        );
+                      } else {
+                        return Container();
+                      }
+                    },
+                  )
+                )
+              ]
             ),
           ],
           bottom: TabBar(
