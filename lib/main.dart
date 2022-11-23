@@ -129,7 +129,7 @@ class _MyHomePageState extends State<MyHomePage> {
                       {
                         return Container(
                           padding: EdgeInsets.all(1),
-                          decoration: new BoxDecoration(
+                          decoration: BoxDecoration(
                             color: Colors.red,
                             borderRadius: BorderRadius.circular(6),
                           ),
@@ -137,9 +137,9 @@ class _MyHomePageState extends State<MyHomePage> {
                             minWidth: 18,
                             minHeight: 18,
                           ),
-                          child: new Text(
+                          child: Text(
                             value.totalItemsInBag.toString(),
-                            style: new TextStyle(
+                            style: TextStyle(
                               color: Colors.white,
                               fontSize: 14,
                               fontWeight: FontWeight.bold
