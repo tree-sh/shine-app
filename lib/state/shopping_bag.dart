@@ -7,6 +7,7 @@ class ShoppingBagNotifier extends ChangeNotifier {
 
   double get totalPrice => _productsInBag.map((product) => product.price * product.quantity).reduce((value, element) => element + value);
   int get totalItemsInBag => _productsInBag.length;
+  int get totalItemsInWishlist => _productsInWishlist.length;
 
   void add(Product item) {
     _productsInBag.add(item);

@@ -102,11 +102,48 @@ class _MyHomePageState extends State<MyHomePage> {
       child: Scaffold(
         appBar: AppBar(
           title: Text(widget.title, style: const TextStyle(fontSize: 28)),
-          leading: GestureDetector(
-            onTap: (){
-              Navigator.pushNamed(context, '/wishlist');
-            },
-            child: const Icon(Icons.favorite_outline, size: 32)
+          leading: Stack(
+            alignment: Alignment.topCenter,
+            children: [
+              GestureDetector(
+                onTap: (){
+                  Navigator.pushNamed(context, '/wishlist');
+                },
+                child: const Icon(Icons.favorite_outline, size: 32)
+              ),
+              Positioned(
+                  right: 6,
+                  child: Consumer<ShoppingBagNotifier>(
+                    builder:(context, value, child) {
+                      if(value.totalItemsInWishlist > 0)
+                      {
+                        return Container(
+                          padding: EdgeInsets.all(1),
+                          decoration: BoxDecoration(
+                            color: Colors.red,
+                            borderRadius: BorderRadius.circular(6),
+                          ),
+                          constraints: BoxConstraints(
+                            minWidth: 18,
+                            minHeight: 18,
+                          ),
+                          child: Text(
+                            value.totalItemsInWishlist.toString(),
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 14,
+                              fontWeight: FontWeight.bold
+                            ),
+                            textAlign: TextAlign.center,
+                          ),
+                        );
+                      } else {
+                        return Container();
+                      }
+                    },
+                  )
+                )
+            ]
           ),
           titleSpacing: 0,
           actions: [
