@@ -19,6 +19,14 @@ class ShoppingBagNotifier extends ChangeNotifier {
     notifyListeners();
   }
 
+  void addToBag(List<Product> wishlistProducts) {
+    _productsInBag.addAll(wishlistProducts);
+    _productsInWishlist.removeWhere((element) {
+      return wishlistProducts.map((e) => e.id).contains(element.id);
+    });
+    notifyListeners();
+  }
+
   void remove(Product item) {
     _productsInBag.removeWhere((product) => product.id == item.id);
     notifyListeners();
