@@ -36,8 +36,7 @@ class _ProductDisplayState extends State<ProductDisplay> {
           ),
           ProductDescription(widget.product)
         ]
-      ),
-      //)
+      )
     );
   }
 }

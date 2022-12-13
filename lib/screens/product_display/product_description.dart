@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:shine_app/models/product.dart';
+import 'package:shine_app/state/shopping_bag.dart';
+import 'package:provider/provider.dart';
 
 class ProductDescription extends StatefulWidget {
   final Product product;
@@ -18,6 +20,7 @@ class _ProductDescriptionState extends State<ProductDescription> {
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
+    var shoppingBagModel = Provider.of<ShoppingBagNotifier>(context);
     return SingleChildScrollView(
       child: Column(
           children: [
@@ -33,7 +36,7 @@ class _ProductDescriptionState extends State<ProductDescription> {
                     color: Colors.grey.withOpacity(0.3),
                     spreadRadius: 1,
                     blurRadius: 2,
-                    offset: Offset(0, 3), // changes position of shadow
+                    offset: Offset(0, 3)
                   ),
                 ],
               ),
@@ -51,27 +54,62 @@ class _ProductDescriptionState extends State<ProductDescription> {
                           child: Text(
                             widget.product.name,
                             softWrap: true,
-                            style: TextStyle(fontSize: 21, fontWeight: FontWeight.w600),
+                            style: const TextStyle(fontSize: 21, fontWeight: FontWeight.w600),
                           ),
                         ),
-                                    Row(children: [
-                                      GestureDetector(
-                                        onTap: (){
-                                          setState(() { isFavorite = !isFavorite; });
-                                        },
-                                        child: isFavorite ? Icon(Icons.favorite, size: 32, color: Colors.red) :  Icon(Icons.favorite_outline, size: 32)
-                                      ),
-                                      SizedBox(width: 10),
-                                      GestureDetector(
-                                        onTap: (){
-                                          setState((){ isAddedToCart = !isAddedToCart; }); 
-                                        },
-                                        child: isAddedToCart ? Icon(Icons.add_shopping_cart, size: 32, color: Colors.green) : Icon(Icons.add_shopping_cart, size: 32)
-                                      ),
-                                    ],),
-                                  ],
-                                )
-                              ),
+                        Row(children: [
+                          GestureDetector(
+                            onTap: (){
+                              setState(() { 
+                                if(!shoppingBagModel.wishlistContainsProduct(widget.product.id)) {
+                                  shoppingBagModel.addToWishlist(widget.product);
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                    const SnackBar(content: Text("Added to Wishlist!", style: TextStyle(fontSize: 18)))
+                                  );
+                                } else {
+                                  shoppingBagModel.removeFromWishlist(widget.product);
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                    const SnackBar(content: Text("Removed from Wishlist", style: TextStyle(fontSize: 18)))
+                                  );
+                                }
+                              });
+                            },
+                            child: Consumer<ShoppingBagNotifier>(
+                              builder: ((context, value, child) {
+                                if(shoppingBagModel.wishlistContainsProduct(widget.product.id)){
+                                  return const Icon(Icons.favorite, size: 32, color: Colors.red);
+                                }
+                                return const Icon(Icons.favorite_border_outlined, size: 32);
+                              })
+                            )
+                          ),
+                          const SizedBox(width: 10),
+                          GestureDetector(
+                            onTap: (){
+                              if(!shoppingBagModel.cartContainsProduct(widget.product.id)) {
+                                shoppingBagModel.add(widget.product);
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                const SnackBar(content: Text("Added to Bag!", style: TextStyle(fontSize: 18)))
+                               );
+                              } else {
+                                shoppingBagModel.remove(widget.product);
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                const SnackBar(content: Text("Removed from Bag", style: TextStyle(fontSize: 18)))
+                               );
+                              }
+                            },
+                            child: Consumer<ShoppingBagNotifier>(
+                              builder: ((context, value, child) {
+                                if(value.products.map((item) => item.id).contains(widget.product.id)){
+                                  return const Icon(Icons.shopping_bag, size: 32, color: Colors.green);
+                                }
+                                return const Icon(Icons.shopping_bag_outlined, size: 32);
+                              })
+                            ))
+                        ])
+                      ],
+                    )
+                  ),
                               SizedBox(height: 5, width: 10),
                               Container(
                                 width: width,
@@ -114,6 +152,6 @@ class _ProductDescriptionState extends State<ProductDescription> {
                         )
                       ],
                     )
-                );
+    );
   }
 }
