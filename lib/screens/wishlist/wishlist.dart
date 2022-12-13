@@ -97,7 +97,11 @@ class _WishlistState extends State<Wishlist> {
                           margin: EdgeInsets.symmetric(horizontal: 18),
                           child: ElevatedButton(
                             onPressed: (){
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                const SnackBar(content: Text("Added to Bag!", style: TextStyle(fontSize: 18)))
+                              );
                               value.addToBag(_wishlistSelected);
+                              _wishlistSelected = [];
                             },
                             child: Text("ADD TO BAG", style: TextStyle(color: Colors.white)),
                             style: ElevatedButton.styleFrom(
@@ -152,7 +156,7 @@ class _WishlistState extends State<Wishlist> {
                  )
               ],
             ),
-                          )
+          )
                         ],
                       )
                     );
