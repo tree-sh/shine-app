@@ -60,7 +60,6 @@ class ShoppingBagNotifier extends ChangeNotifier {
   void replaceProduct(Product item){
     int index = _productsInBag.indexWhere((element) => element.id == item.id);
     _productsInBag.replaceRange(index, index + 1, [item]);
-    print(_productsInBag.map((e) => e.quantity));
     notifyListeners();
   }
 
