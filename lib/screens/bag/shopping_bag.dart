@@ -165,7 +165,10 @@ class _ShoppingBagState extends State<ShoppingBag> {
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(product.name),
+                  Container(
+                    width: _width * 0.45,
+                    child: Text(product.name, softWrap: true,)
+                  ),
                   Text(
                     "₱${product.price}",
                     style: TextStyle(fontSize: 21, color: Colors.orange, fontWeight: FontWeight.w600),
@@ -185,8 +188,8 @@ class _ShoppingBagState extends State<ShoppingBag> {
                             product.qty = product.quantity + 1;
                             value.replaceProduct(product);
                           },
-                            child: Icon(Icons.add, size: 25)
-                          ),
+                          child: Icon(Icons.add, size: 25)
+                        ),
                         SizedBox(width: 15),
                         Text("${product.quantity}", style: TextStyle(fontSize: 25)),
                         SizedBox(width: 15),

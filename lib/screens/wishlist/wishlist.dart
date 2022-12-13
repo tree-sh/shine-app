@@ -137,12 +137,15 @@ class _WishlistState extends State<Wishlist> {
             Image.asset(product.image, height: 180, width: _width * 0.3),
             SizedBox(width: 10),
             Container(
-              height: 130,
+              //height: 130,
               child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(product.name),
+                Container(
+                  width: _width * 0.45,
+                  child: Text(product.name, softWrap: true,)
+                ),
                 Text(
                   "₱${product.price.toStringAsFixed(2)}",
                   style: TextStyle(fontSize: 21, color: Colors.orange, fontWeight: FontWeight.w600),
